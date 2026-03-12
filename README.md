@@ -15,11 +15,14 @@ Eco-Essentials is a modern ecommerce web application built with Next.js, Sanity,
 ### Home Page
 ![Home Page](Screenshots/home.jpg)
 
+### Products Page
+![Products Page](Screenshots/products.jpg)
+
 ### About Page
 ![About Page](Screenshots/about.jpg)
 
-### Products Page
-![Products Page](Screenshots/products.jpg)
+### Contact Page
+![Contact Page](Screenshots/contact.jpg)
 
 ### Cart & Payment Page
 ![Cart & Payment Page](Screenshots/cart%20and%20payment.jpg)
@@ -27,8 +30,6 @@ Eco-Essentials is a modern ecommerce web application built with Next.js, Sanity,
 ### Success Page
 ![Success Page](Screenshots/success.jpg)
 
-### Contact Page
-![Contact Page](Screenshots/contact.jpg)
 
 ## Getting Started
 
