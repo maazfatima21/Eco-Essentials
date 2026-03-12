@@ -1,0 +1,27 @@
+'Log files:
+C:\Users\Maaz Fatima\Documents\capstone\ecommerce-app\ecommerce-app\--force\_logs\2024-03-29T15_58_27_034Z-debug-0.log
+
+# npm resolution error report
+
+While resolving: next-sanity@4.3.2
+Found: next@14.1.4
+node_modules/next
+  next@"^14.1.4" from the root project
+  peer next@"*" from next-themes@0.2.1
+  node_modules/next-themes
+    next-themes@"0.2.1" from the root project
+
+Could not resolve dependency:
+peer next@"^13.0.0" from next-sanity@4.3.2
+node_modules/next-sanity
+  next-sanity@"4.3.2" from the root project
+
+Conflicting peer dependency: next@13.5.6
+node_modules/next
+  peer next@"^13.0.0" from next-sanity@4.3.2
+  node_modules/next-sanity
+    next-sanity@"4.3.2" from the root project
+
+Fix the upstream dependency conflict, or retry
+this command with --force or --legacy-peer-deps
+to accept an incorrect (and potentially broken) dependency resolution.

@@ -1,0 +1,75 @@
+"use client"
+
+import { useState } from "react"
+import Image from "next/image"
+import { urlForImage } from "@/sanity/lib/image"
+
+import { SanityProduct } from "@/config/inventory"
+import { shimmer, toBase64 } from "@/lib/image"
+
+interface Props {
+  product: SanityProduct
+}
+
+export function ProductGallery({product} : Props) {
+  const [selectedImage, setSelectedImage] = useState(0)
+  
+  if (!product || !product.images || product.images.length === 0) {
+    return (
+      <div className="flex flex-col-reverse gap-4">
+        <div className="w-full h-96 sm:h-[500px] border-2 border-gray-200 bg-gray-100 flex items-center justify-center rounded-lg dark:border-gray-800">
+          <p className="text-gray-500">No images available</p>
+        </div>
+      </div>
+    )
+  }
+  
+  return (
+    <div className="flex flex-col-reverse">
+      {/* Image Grid */}
+      <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
+        <ul className="grid grid-cols-4 gap-6">
+          {product.images.map((image, index) => (
+            <div
+              key={image._key as string}
+              onClick={() => setSelectedImage(index)}
+              className="relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase hover:bg-gray-50 overflow-hidden border border-gray-200"
+            >
+              <Image
+                src={urlForImage(image).url()}
+                fill
+                sizes="100px"
+                alt=""
+                className="object-contain object-center"
+                placeholder="blur"
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                  shimmer(100, 100)
+                )}`}
+              />
+              {index === selectedImage && <span
+                  className="pointer-events-none absolute inset-0 rounded-md ring-4 ring-indigo-500 ring-offset-2"
+                  aria-hidden="true"
+                />}
+            </div>
+          ))}
+        </ul>
+      </div>
+
+      {/* Main Image */}
+      <div className="w-full aspect-[4/5] relative overflow-hidden rounded-lg border-2 border-gray-200 bg-gray-100 dark:border-gray-800 flex items-center justify-center">
+        <Image
+          priority
+          src={urlForImage(product.images[selectedImage]).url()}
+          alt={`Main ${product.name} image`}
+          fill
+          sizes="(max-width: 640px) 100vw, 50vw"
+          placeholder="blur"
+          blurDataURL={`data:image/svg+xml;base64,${toBase64(
+            shimmer(600, 750)
+          )}`}
+          className="object-contain object-center shadow-sm"
+        />
+      </div>
+    </div>
+  )
+}
