@@ -98,15 +98,17 @@ export default async function ProductsPage({searchParams}: Props) {
             <h2 id="products-heading" className="sr-only">
               Products
             </h2>
-            <div className={cn("grid grid-cols-1 gap-x-8 gap-y-10", 
-            products.length > 0 
-              ? "lg:grid-cols-4"
-              : "lg:grid-cols-[1fr_3fr]"
-            )}
-            >
+            <div className={cn(
+              products.length > 0
+                ? "grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10"
+                : "grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-x-8 gap-y-10"
+            )}>
+              <div className="col-span-1">
                 <ProductFilters/>
               </div>
-              <ProductGrid products={products} />
+              <div className="col-span-3">
+                <ProductGrid products={products} />
+              </div>
             </div>
           </section>
         </main>
