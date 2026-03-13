@@ -10,6 +10,7 @@ A modern e-commerce platform built with Next.js, featuring eco-friendly products
 - [Environment Variables](#environment-variables)
 - [Running the Project](#running-the-project)
 - [Deployment](#deployment)
+- [API Documentation](#api-documentation)
 - [Key Features Explained](#key-features-explained)
 - [Troubleshooting](#troubleshooting)
 - [Additional Resources](#additional-resources)
