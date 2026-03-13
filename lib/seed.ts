@@ -1,18 +1,21 @@
 import { createClient } from "@sanity/client"
 import { inventory } from "@/config/inventory"
 
-const seedClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  apiVersion: '2023-05-12',
-  token: process.env.SANITY_API_TOKEN,
-  useCdn: false
-})
+function getSeedClient() {
+  return createClient({
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    apiVersion: "2023-05-12",
+    token: process.env.SANITY_API_TOKEN,
+    useCdn: false,
+  })
+}
 
 export async function seedSanityData() {
   try {
+    const seedClient = getSeedClient()
     const transaction = seedClient.transaction()
-    
+
     inventory.forEach((item) => {
       const product = {
         _type: "product",
@@ -22,21 +25,20 @@ export async function seedSanityData() {
         description: item.description,
         price: item.price,
         sku: item.sku,
-        sizes: item.sizes,
         colors: item.colors,
         categories: item.categories,
         slug: {
           _type: "slug",
-          current: slugify(item.name)
-        }
+          current: slugify(item.name),
+        },
       }
       transaction.createOrReplace(product)
     })
-    
+
     await transaction.commit()
     console.log("Products created successfully")
-    
-    await seedSanityImages()
+
+    await seedSanityImages(seedClient)
     console.log("Sanity data seeded successfully")
   } catch (error) {
     console.error("Seed error:", error)
@@ -44,12 +46,12 @@ export async function seedSanityData() {
   }
 }
 
-async function seedSanityImages() {
+async function seedSanityImages(seedClient: ReturnType<typeof getSeedClient>) {
   await Promise.all(
     inventory.map(async (item) => {
       try {
         let images: any[] = []
-        
+
         for (const image of item.images) {
           try {
             const imageAssetResponse = await fetch(image)
@@ -70,7 +72,7 @@ async function seedSanityImages() {
             console.error(`Failed to upload image for ${item.name}:`, error)
           }
         }
-        
+
         if (images.length > 0) {
           await seedClient
             .patch(item.id)
@@ -84,6 +86,7 @@ async function seedSanityImages() {
     })
   )
 }
+
 
 function slugify(text: string) {
   return text

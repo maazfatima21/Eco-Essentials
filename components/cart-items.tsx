@@ -5,7 +5,7 @@ import Link from "next/link"
 import { urlForImage } from "@/sanity/lib/image"
 import { Clock, X } from "lucide-react"
 import { useShoppingCart } from "use-shopping-cart"
-import { Product } from "use-shopping-cart/core"
+import { CartEntry, Product } from "use-shopping-cart/core"
 
 import { shimmer, toBase64 } from "@/lib/image"
 import { formatPrice } from "@/lib/format-price"
@@ -15,12 +15,15 @@ import { useToast } from "@/components/ui/use-toast"
 import { CartItemsEmpty } from "@/components/cart-items-empty"
 
 export function CartItems() {
-  const {cartDetails, removeItem, setItemQuantity} = useShoppingCart()
-  const CartItems = Object.entries(cartDetails!).map(([_, product]) => product)
-  const {toast} = useToast()
-  function getEcoImpact(product) {
-    const perItemCO2 = product.ecoImpactCO2 || 2; // fallback to 2kg if not set
-    return perItemCO2 * (product.quantity || 1);
+  const { cartDetails, removeItem, setItemQuantity } = useShoppingCart()
+  const CartItems: CartEntry[] = cartDetails
+    ? Object.values(cartDetails)
+    : []
+  const { toast } = useToast()
+
+  function getEcoImpact(product: CartEntry & { ecoImpactCO2?: number }) {
+    const perItemCO2 = product.ecoImpactCO2 || 2 // fallback to 2kg if not set
+    return perItemCO2 * (product.quantity || 1)
   }
 
   function removeCartItem(product: Product) {
