@@ -1,6 +1,6 @@
 # Eco-Essentials Ecommerce
 
-Eco-Essentials is a modern ecommerce web application built with Next.js, Sanity, Stripe, and Tailwind CSS. It features eco-friendly products, a shopping cart, checkout, and admin studio.
+Eco-Essentials is a robust e-commerce platform engineered with Next.js, Sanity CMS, Stripe for payments, and Tailwind CSS for styling. It showcases sustainable products, includes a fully functional shopping cart, streamlined checkout, and an integrated admin studio.
 
 ## Features
 - Product listing and filtering
